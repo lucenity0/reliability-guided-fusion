@@ -1,0 +1,35 @@
+# crisismmd, dynamic: frozen by hmf.sweep (#20). Best of 20 trials on val auroc, seed 0.
+# Base config: configs/fhm/dynamic.yaml. Swept: lambda_aux, lambda_rel, tau, lr, dropout, weight_decay, hidden_dim, warmup_frac.
+# Sweep record: results/crisismmd/sweeps/dynamic.json
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: crisismmd
+method: dynamic
+model: dynamic
+cache_version: v1
+num_classes: 2
+max_samples: 0
+feature_dim: 768
+hidden_dim: 256
+num_heads: 8
+n_cross_layers: 2
+cross_fusion_dim: 32
+dropout: 0.12296864976324462
+fusion_variant: P
+router_mode: dynamic
+tau: 1.0
+lambda_aux: 0.47659835278494994
+lambda_rel: 0.42018435373384483
+entropy_stop_grad: true
+lr: 7.532459352989232e-05
+weight_decay: 0.04350093720685712
+warmup_frac: 0.05
+batch_size: 64
+num_epochs: 30
+patience: 5

@@ -1,0 +1,35 @@
+# harm_c, dynamic: frozen by hmf.sweep (#20). Best of 20 trials on val auroc, seed 0.
+# Base config: configs/fhm/dynamic.yaml. Swept: lambda_aux, lambda_rel, tau, lr, dropout, weight_decay, hidden_dim, warmup_frac.
+# Sweep record: results/harm_c/sweeps/dynamic.json
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: harm_c
+method: dynamic
+model: dynamic
+cache_version: v1
+num_classes: 2
+max_samples: 0
+feature_dim: 768
+hidden_dim: 512
+num_heads: 8
+n_cross_layers: 2
+cross_fusion_dim: 32
+dropout: 0.33681677250873565
+fusion_variant: P
+router_mode: dynamic
+tau: 2.0
+lambda_aux: 0.8460460262956268
+lambda_rel: 0.004695476192547066
+entropy_stop_grad: true
+lr: 9.525198369486736e-05
+weight_decay: 0.03289007623163494
+warmup_frac: 0.1
+batch_size: 64
+num_epochs: 30
+patience: 5

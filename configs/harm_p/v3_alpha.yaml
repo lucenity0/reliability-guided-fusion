@@ -1,0 +1,41 @@
+# harm_p, v3_alpha: frozen by hmf.sweep (#20). Best of 20 trials on val auroc, seed 0.
+# Base config: configs/fhm/v3_alpha.yaml. Swept: lr, weight_decay, warmup_frac.
+# Sweep record: results/harm_p/sweeps/v3_alpha.json
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: harm_p
+method: v3_alpha
+model: v3_alpha
+cache_version: v1
+num_classes: 2
+max_samples: 0
+feature_dim: 768
+gate_query_dim: 128
+gate_hidden_dim_1: 512
+gate_hidden_dim_2: 128
+gate_dropout_1: 0.4
+gate_dropout_2: 0.3
+classifier_hidden_dim_1: 512
+classifier_hidden_dim_2: 256
+classifier_hidden_dim_3: 64
+classifier_dropout_1: 0.4
+classifier_dropout_2: 0.3
+classifier_dropout_3: 0.2
+lambda_aux: 0.3
+lambda_entropy: 0.002
+lambda_diversity: 0.05
+normalize_eps: 1.0e-12
+entropy_eps: 1.0e-08
+alpha_entropy_eps: 1.0e-07
+lr: 0.00025741188359629583
+weight_decay: 0.01555534486016756
+warmup_frac: 0.1
+batch_size: 64
+num_epochs: 30
+patience: 5

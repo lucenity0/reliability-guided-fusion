@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reliability-Guided Fusion</title>
+<meta name="description" content="An interactive paper: when should a multimodal model trust the image, the text, or both?">
+<script>try{const t=localStorage.getItem("rgf-theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f4f0'/%3E%3Cpath d='M5 8c9 0 10 8 15 8M5 16h15M5 24c9 0 10-8 15-8' stroke='%23161513' stroke-width='2' fill='none'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161513'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+<!-- shared print patterns: image = solid, text = hatching, interaction = dots -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="pat-txt" width="4.6" height="4.6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4.6" style="stroke:var(--ink)" stroke-width="1.4"/>
+    </pattern>
+    <pattern id="pat-int" width="5" height="5" patternUnits="userSpaceOnUse">
+      <circle cx="2.5" cy="2.5" r="1.15" style="fill:var(--ink)"/>
+    </pattern>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1.5 L9,5 L0,8.5" style="fill:none;stroke:var(--ink)" stroke-width="1.3"/>
+    </marker>
+  </defs>
+</svg>
+
+<header class="bar">
+  <a class="title" href="#top">Reliability-Guided Fusion</a>
+  <nav id="toc">
+    <a href="#problem"><span>§1</span>Problem</a>
+    <a href="#fixed"><span>§2</span>Fixed weights</a>
+    <a href="#method"><span>§3</span>Method</a>
+    <a href="#demo"><span>§4</span>Try it</a>
+    <a href="#findings"><span>§5</span>Findings</a>
+    <a href="#limits"><span>§6</span>Limits</a>
+    <a href="#results"><span>§7</span>Results</a>
+  </nav>
+  <button class="theme" id="theme" aria-label="Toggle dark mode">◐ dark</button>
+</header>
+
+<main class="page" id="top">
+  <!-- ── title block ── -->
+  <div class="masthead">
+    <div class="kicker">Major project · Department of Computer Science and Engineering · B.M.S. College of Engineering, Bengaluru</div>
+    <h1>When should a model trust the image, the text, or both?</h1>
+    <p class="subtitle">A unified adaptive framework for multimodal data fusion with reliability-guided dynamic expert fusion.</p>
+    <div class="authors">
+      <div>S Nafees<span class="mono faint">1BM23CS279</span></div>
+      <div>S Gaja Lakshmi<span class="mono faint">1BM23CS278</span></div>
+      <div>Saanvi S<span class="mono faint">1BM23CS282</span></div>
+      <div>Sachit P Naidu<span class="mono faint">1BM24CS420</span></div>
+      <div class="guide">Rekha G S<span class="faint">Assistant Professor · Guide</span></div>
+    </div>
+  </div>
+  <div class="abstract">
+    <h2>Abstract</h2>
+    <div>
+      <p>A multimodal classifier combines an image with the text that comes with it, but which of the two deserves trust changes from one input to the next. We route every input over three experts (image, text and their interaction) with a router trained toward a <em>reliability target</em>: whichever expert was actually right on that sample. A single temperature spans static fusion and hard expert selection. Under a strict protocol (validation-only tuning, one test pass, ten seeds, Holm-corrected tests) on seven datasets, routing is not a free win: on clean data it matches static fusion everywhere except Harm-C. When input quality varies per sample, it moves weight away from the missing modality on all six datasets tested and beats static fusion significantly on three.</p>
+      <div class="jump"><a href="#demo">Skip to the live demo →</a><a href="#results">Jump to the full results →</a></div>
+    </div>
+  </div>
+
+  <!-- ── §1 ── -->
+  <section class="chapter" id="problem">
+    <div class="chapter-head"><div class="no">§1</div><h2>The same photo can mean different things</h2><p class="lede">What a model should trust depends on the input in front of it, not on the model.</p></div>
+    <div class="col"><p>Every multimodal task starts from the same assumption: the picture and the words are both worth listening to. Often they are. Sometimes one of them is missing, damaged, or points the other way. Four short scenes show the difference before we say anything about models.</p></div>
+    <div class="scrolly" data-fig="fig1">
+      <div class="steps">
+        <div class="step" data-step="0"><div class="k">1 / 4</div><h3>A photo</h3><p class="sub">Reading the picture on its own</p><p>Show a model this picture. An image expert would call it a holiday: sun, sea and a beach umbrella. Nothing in the pixels is ambiguous, and an image-only classifier would be confident.</p><p>That confidence is the first thing to be wary of. A model can be completely sure and still be answering only half of the question. Real inputs arrive with words attached (a caption, a tweet, the text printed across a meme), and the words can change what the picture means.</p></div>
+        <div class="step" data-step="1"><div class="k">2 / 4</div><h3>A caption that agrees</h3><p class="sub">When both modalities say the same thing</p><p>“Great weather for my day off.” The text says what the image says. Either expert alone gets this right, so trusting both equally costs nothing.</p><p>Many examples look like this, which is why a fixed fusion rule works well on clean benchmarks: when the sources agree and neither is damaged, averaging them is hard to beat. Our results come back to this later, because on clean data routing matches static fusion almost everywhere.</p></div>
+        <div class="step" data-step="2"><div class="k">3 / 4</div><h3>A caption that flips it</h3><p class="sub">When the meaning lives in the combination</p><p>“Can’t wait to be back at my desk on Monday.” Alone, the text is about work; alone, the image is a holiday. Together they are sarcasm, which only a model of the <em>interaction</em> can see.</p><p>In hateful memes this is the hard case: a harmless picture and a harmless sentence that become hateful together. Neither half is evidence on its own.</p><p>That is why we give the model a third expert. Besides an image expert and a text expert, an interaction expert reads the two together, because when the signal sits in the pairing, neither single-modality expert can supply it.</p></div>
+        <div class="step" data-step="3"><div class="k">4 / 4</div><h3>A broken input</h3><p class="sub">When one side cannot be trusted</p><p>Now the photo fails to load, or the caption is empty, or the text describes something else entirely. Only one side is reliable, yet a fixed fusion rule keeps giving the image its usual share of the vote.</p><p>The right weighting depends on the input in front of it, and it can change from one example to the next. That is what we set out to learn: a router that decides, for every input, how much each expert should count.</p><p class="muted" style="font-size:15.5px">The rest of this page follows that question: how the router is built, how we tested it fairly, and where it helped and where it did not.</p></div>
+      </div>
+      <div class="stage"><div class="figure" id="fig1"></div><div class="cap" id="cap1"><b>Fig. 1.</b> An invented example, drawn rather than taken from any dataset. Below the picture: what each part says, and the weighting a good router should choose (illustrative).</div></div>
+    </div>
+  </section>
+
+  <!-- ── §2 ── -->
+  <section class="chapter" id="fixed">
+    <div class="chapter-head"><div class="no">§2</div><h2>Why fixed weights fail</h2><p class="lede">Our first version learned one weight per input. A stricter look showed what that weight was really doing.</p></div>
+    <div class="col"><p>Before building something new, it helps to say exactly what we are trying to beat. The baseline is static fusion, and the story of our first version is the reason the evaluation in this project is as strict as it is.</p></div>
+    <div class="scrolly" data-fig="fig2">
+      <div class="steps">
+        <div class="step" data-step="0"><div class="k">1 / 4</div><h3>Static fusion</h3><p class="sub">One recipe for every input</p><p>The simplest rule averages the experts with the same weights for every input. It cannot react to a sarcastic caption or a missing photo.</p><p>It is a strong baseline, and we treat it as the one to beat: every claim later on is a comparison against static fusion built from the same three experts, on the same frozen features, splits and seeds.</p></div>
+        <div class="step" data-step="1"><div class="k">2 / 4</div><h3>A learned gate</h3><p class="sub">Our first version, V3</p><p>Our earlier version (V3) learned one gate α per input, sliding between the image and the text.</p><p>Where static fusion fixes the weights in advance, V3 learned them: a small network looked at both feature vectors and produced a single number α between 0 and 1, the image’s share, with 1 − α left for the text.</p><p>The first paper reported this ahead of an equal-weight baseline on the Hateful Memes validation split (AUROC 0.752 against 0.712).</p></div>
+        <div class="step" data-step="2"><div class="k">3 / 4</div><h3>The gate collapsed</h3><p class="sub">Dynamic in name, static in practice</p><p>In our last V3 runs α settled at 0.5 for every input, with a standard deviation of about 0.002. It had learned to be static fusion.</p><p>Two things in the design pushed it there. One scalar scaled two already-normalised vectors that the next layer could simply rescale, and an entropy regulariser nudged α toward 0.5.</p><p class="muted" style="font-size:15.5px">A gate that never moves cannot be dynamic, so the question became how to give a router a signal worth following.</p></div>
+        <div class="step" data-step="3"><div class="k">4 / 4</div><h3>And lost to the fixed rule</h3><p class="sub">What a stricter look showed</p><p>A fixed α = 0.5 scored higher: <span class="num">0.737</span> against <span class="num">0.720</span> AUROC.</p><p>Three more problems surfaced: “cross-attention” over a single pooled token (softmax over one key is always 1), one 500-sample split used both to select the model and to report it, and fine-tuned CLIP overfitting (train AUROC 0.98, validation ≈ 0.70).</p><p>None of this is a reason to drop the idea. It is a reason to rebuild it carefully, so version 4 rebuilds both the method and the evaluation protocol.</p></div>
+      </div>
+      <div class="stage"><div class="figure" id="fig2"></div><div class="cap"><b>Fig. 2.</b> V3’s gate. The strip of inputs is schematic; the reported values are mean α ≈ 0.5 and std ≈ 0.002 on FHM.</div></div>
+    </div>
+  </section>
+
+  <!-- ── §3 ── -->
+  <section class="chapter" id="method">
+    <div class="chapter-head"><div class="no">§3</div><h2>Three experts, one router, and a target</h2><p class="lede">The router is told, during training, which expert was right.</p></div>
+    <div class="col"><p>The method has four parts: frozen features, three experts, a router, and a training target. None is exotic on its own. What matters is how they are tied together, and what the router is asked to predict.</p></div>
+    <div class="scrolly" data-fig="fig3">
+      <div class="steps">
+        <div class="step" data-step="0"><div class="k">1 / 5</div><h3>Frozen features</h3><p class="sub">Computed once, reused everywhere</p><p>CLIP ViT-L/14@336 turns the image into 144 pooled patch tokens plus a summary token, and the text into up to 77 word tokens. CLIP stays frozen and the features are cached once, so one training run takes about five minutes.</p><p>Freezing matters twice. It makes experiments cheap enough to repeat across ten seeds, and it avoids the overfitting we saw when fine-tuning CLIP on 8,500 memes, where training AUROC reached 0.98 while validation stayed near 0.70.</p></div>
+        <div class="step" data-step="1"><div class="k">2 / 5</div><h3>Three experts</h3><p class="sub">Image, text, and their interaction</p><p>The <span class="sw p-img"></span>image expert reads image tokens, the <span class="sw p-txt"></span>text expert reads word tokens, and the <span class="sw p-int"></span>interaction expert runs two layers of image↔text cross-attention plus an outer product of the two summaries. Each predicts class probabilities <em>p<sub>k</sub></em>.</p><p>The first two see one modality only, so when one side fails the other is untouched. The interaction expert is the only one that can see sarcasm, a contradiction, or a meme whose punchline needs both halves.</p></div>
+        <div class="step" data-step="2"><div class="k">3 / 5</div><h3>A router</h3><p class="sub">Deciding how much each expert counts</p><p>The router reads the two summary embeddings, how unsure each expert is (its entropy), and how well image and text agree (their cosine similarity). It outputs weights π over the experts, eq. (1).</p><p>Three kinds of evidence go in: what the input looks like, how sure each expert already is, and whether the two modalities agree. The weights it returns are positive and sum to one, one per expert, and are recomputed for every input.</p></div>
+        <div class="step" data-step="3"><div class="k">4 / 5</div><h3>Mix</h3><p class="sub">One probability from three opinions</p><p>The prediction is the π-weighted mixture of the experts’ probabilities, eq. (2). With π = ⅓ for every input this is exactly static fusion.</p><p>Because the weights sum to one, the mixture is itself a proper probability. At the extremes it reduces to something familiar: equal weights are static fusion, and all the weight on one expert is hard selection.</p></div>
+        <div class="step" data-step="4"><div class="k">5 / 5</div><h3>Train toward reliability</h3><p class="sub">Teaching the router who was right</p><p>Each expert’s loss on the true label measures how reliable it was on that sample. A softmax over the losses at temperature τ gives the target <em>t</em>, eq. (3), and a KL term pulls the router toward it, eq. (4).</p><p>The target is computed from the experts’ own losses and held fixed during training, so the router chases it without the experts moving to meet it.</p><p class="muted" style="font-size:15.5px">As τ → ∞ the target is uniform: static fusion. As τ → 0 it picks the single best expert. At τ = 1 it equals the E-step responsibility of a classical mixture of experts. One parameter spans static to hard routing: that is the sense in which the framework is <em>unified</em>.</p></div>
+      </div>
+      <div class="stage"><div class="figure" id="fig3"></div><div class="cap"><b>Fig. 3.</b> The architecture. Only the fusion head (4.5 M parameters) is trained; the dashed path exists only during training.</div></div>
+    </div>
+  </section>
+
+  <!-- ── §4 ── -->
+  <section class="chapter" id="demo">
+    <div class="chapter-head"><div class="no">§4</div><h2>Try it</h2><p class="lede">The trained model, running on this machine. Give it a photo and a line of text, then break the input and watch the weights move.</p></div>
+    <div class="instrument">
+      <div class="in">
+        <div class="lbl"><span>photo</span><span class="mono faint" id="imgname"></span></div>
+        <div class="photo" id="photo" tabindex="0" role="button" aria-label="Choose a photo">
+          <div class="ph" id="ph">Drop a food photo here, or click to choose one.<span class="mono">paste with ⌘V</span></div>
+          <img id="preview" alt="" hidden><span class="swap" id="swap" hidden>change</span>
+        </div>
+        <input type="file" id="file" accept="image/*" hidden>
+        <textarea id="text" placeholder="A line of text about it: a caption or a recipe title."></textarea>
+        <div class="tries" id="tries">Try: </div>
+        <button class="go" id="go" disabled><span id="golbl">Run the model</span><span class="mono">4 inputs</span></button>
+        <div class="status" id="status">Connecting to the model…</div>
+        <div class="err" id="err" hidden></div>
+      </div>
+      <div class="out" id="out">
+        <div class="blank" id="blank">The prediction, the router’s weights, each expert’s view<br>and a four-way stress test will appear here.</div>
+        <div id="readout" hidden>
+          <div class="lbl"><span id="condname">original input</span><span class="mono faint" id="ms"></span></div>
+          <div class="verdict"><div class="what" id="what">–</div><div class="p" id="pv">–</div><div class="vs" id="vs"></div></div>
+          <table class="rows" id="top5"></table>
+          <div class="block">
+            <div class="lbl"><span>router weights π</span><span class="key"><span><i class="sw p-img"></i>image</span><span><i class="sw p-txt"></i>text</span><span><i class="sw p-int"></i>interaction</span></span></div>
+            <div class="pibar" id="pibar"><i class="p-img"></i><i class="p-txt"></i><i class="p-int"></i></div>
+            <div class="pilab mono" id="pilab"></div>
+            <p class="say" id="say"></p>
+          </div>
+          <div class="block">
+            <div class="lbl"><span>stress test: same model, four versions of your input</span></div>
+            <table class="stress" id="stress"></table>
+          </div>
+          <div class="block">
+            <div class="lbl"><span>what each expert sees before mixing</span></div>
+            <table class="experts" id="experts"></table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col" style="margin-top:22px">
+      <p class="muted" style="font-size:15.5px"><span class="sn" data-n="†">The meme datasets contain hateful content and cannot be redistributed. Food-101 (photo + recipe text, 101 dishes) runs the same method and code.</span>Why food? This is the frozen Food-101 checkpoint (seed 0, test accuracy <span class="num">0.951</span>) and the exact feature pipeline used in training. “Image removed” replaces the photo with a blank grey canvas, “text removed” uses an empty string, and “mismatched text” describes a different dish.</p>
+    </div>
+  </section>
+
+  <!-- ── §5 ── -->
+  <section class="chapter" id="findings">
+    <div class="chapter-head"><div class="no">§5</div><h2>What we found</h2><p class="lede">On clean data the router mostly stays put. When inputs break, it moves, and that pays off.</p></div>
+    <div class="col"><p>Everything below follows a protocol fixed before we looked at test data: tune on validation only, read the test split once, run ten seeds, and correct for multiple comparisons. Scroll for the story; the explorer underneath lets you check any dataset yourself.</p></div>
+    <div class="scrolly" data-fig="fig4">
+      <div class="steps">
+        <div class="step" data-step="0"><div class="k">1 / 5</div><h3>Clean memes: near the centre</h3><p class="sub">Hateful Memes, undamaged</p><p>Each mark is one test meme, placed by its router weights; the centre is static fusion. On clean Hateful Memes the router barely leaves it: the three experts are strongly correlated and usually agree.</p><p>That is a result, not a failure. On clean data the router matches static fusion on every dataset except Harm-C, where it is significantly better, and Food-101, where it is slightly worse. When nothing is damaged, there is little for a router to route around.</p></div>
+        <div class="step" data-step="1"><div class="k">2 / 5</div><h3>Harm-C: the image wins</h3><p class="sub">One modality that is reliably better</p><p>On Harm-C (COVID-19 memes) the image is consistently the more reliable modality, and the router learns it: median π<sub>img</sub> = <span class="num" id="harmc-med">0.79</span>. It is the one clean dataset where routing beats static fusion significantly.</p><p>Nobody told the router this. It was trained only toward whichever expert was right on each sample, and it found the pattern itself, while a fixed rule would keep giving the weaker sources an equal say.</p></div>
+        <div class="step" data-step="2"><div class="k">3 / 5</div><h3>Break half the inputs</h3><p class="sub">A test fixed before we looked</p><p>Before running it, we pre-registered a test: half of every split loses one modality (a quarter the image, a quarter the text). Follow the same Harm-C memes: those without an image slide toward the text corner, those without text toward the image.</p><p>Which samples are broken depends only on each sample’s ID, so every method, seed and epoch sees exactly the same damage. A missing modality is replaced by the average training token, so nothing is tuned after seeing the outcome.</p></div>
+        <div class="step" data-step="3"><div class="k">4 / 5</div><h3>Every dataset, same direction</h3><p class="sub">The weights respond to the damage</p><p>On all six datasets, the weight on a modality falls when that modality is missing. Every line slopes down.</p><p>On Harm-C the effect is dramatic: with the image missing, its weight drops from 0.65 to 0.03; with the text missing, the text weight drops from 0.18 to 0.04. On Harm-P it is slight (0.34 to 0.31) but points the same way.</p></div>
+        <div class="step" data-step="4"><div class="k">5 / 5</div><h3>And it pays off, sometimes</h3><p class="sub">Small, consistent, and not the whole story</p><p>Under mixed quality, routing beats static fusion significantly on FHM, Harm-C and CrisisMMD after Holm correction. On clean data, only on Harm-C, and on Food-101 it is slightly worse.</p><p>The gains are modest: +0.003 to +0.007 AUROC, ahead of static fusion in 8 or 9 of 10 seeds on those three datasets.</p><p class="muted" style="font-size:15.5px">We do not claim it is the best method. Under mixed quality, PDF or QMF scores higher than ours on five of the six datasets (their means are over 5 seeds, ours over 10). What we can say is when routing helps, and how much.</p></div>
+      </div>
+      <div class="stage"><div class="figure" id="fig4"></div><div class="cap" id="cap4"></div></div>
+    </div>
+
+    <div class="explore" id="explore">
+      <div>
+        <div class="controls"><div class="chips" id="ds"></div><div class="chips" id="mode"><button data-m="clean" aria-pressed="true">clean</button><button data-m="mixed" aria-pressed="false">mixed quality</button></div></div>
+        <div class="tri"><canvas id="tri"></canvas></div>
+      </div>
+      <div id="exside"></div>
+    </div>
+  </section>
+
+  <!-- ── §6 ── -->
+  <section class="chapter" id="limits">
+    <div class="chapter-head"><div class="no">§6</div><h2>Where it does not help</h2><p class="lede">A router that reads confidence cannot tell a plausible input from a wrong one.</p></div>
+    <div class="col">
+      <p><span class="sn" data-n="1">From the pre-registered robustness test: dynamic − static under “swap-image” on Harm-C is <span class="num" id="swapv">−0.158</span> AUROC (p &lt; 0.001).</span>In the demo’s mismatched-text test the router leans <em>further</em> on the contradicting text and follows it. The same happens at scale: on Harm-C, swapping in another meme’s image costs dynamic fusion far more than static fusion, because the router has learned to trust the image there. Its inputs measure how confident each expert is, not whether the input makes sense.</p>
+      <p>Nothing transfers well across meme datasets either, and most of the cost sits in the frozen backbone rather than in the fusion head.</p>
+    </div>
+    <div class="grid3">
+      <div><h4>Transfer</h4><div id="fig5"></div><div class="cap"><b>Fig. 5.</b> Train on one dataset, test on another without adaptation (dynamic model, test AUROC). The diagonal is in-domain.</div></div>
+      <div><h4>Ablations</h4><div id="fig6"></div><div class="cap"><b>Fig. 6.</b> Change in FHM validation AUROC when a part is removed (5 seeds). Filled bars are significant (paired <em>t</em>-test).</div></div>
+      <div><h4>Cost</h4><div id="fig7"></div><div class="cap"><b>Fig. 7.</b> Latency per sample, batch 1, NVIDIA L4, log scale. The fusion head is 4.5 M parameters and 0.6 GFLOPs.</div></div>
+    </div>
+  </section>
+
+  <!-- ── §7 ── -->
+  <section class="chapter" id="results">
+    <div class="chapter-head"><div class="no">§7</div><h2>Full results</h2><p class="lede">Every method on the same frozen features, splits and seeds.</p></div>
+    <div class="table-wrap"><table class="res" id="res"></table></div>
+  </section>
+
+  <div class="colophon">
+    <h2>Colophon</h2>
+    <dl>
+      <dt>Team</dt><dd>S Nafees · S Gaja Lakshmi · Saanvi S · Sachit P Naidu</dd>
+      <dt>Guide</dt><dd>Rekha G S, Assistant Professor</dd>
+      <dt>Institution</dt><dd>Department of CSE, B.M.S. College of Engineering, Bengaluru</dd>
+      <dt>Data</dt><dd>Every number on this page is read from the committed results (<span class="mono">results/*/seed*/preds_test.csv</span>, <span class="mono">docs/tables/*.md</span>). Dataset images and text are never shown.</dd>
+      <dt>Code</dt><dd>Repository <span class="mono">adaptive-expert-fusion</span>; this page is <span class="mono">showcase/</span>.</dd>
+      <dt>Type</dt><dd>Mogaly for display, Charter for text.</dd>
+    </dl>
+  </div>
+</main>
+<div class="tip" id="tip"></div>
+<script src="paper.js"></script>
+<!-- Reading-progress rail. Optional: delete the next line to switch it off. -->
+<script src="progress.js"></script>
+</body>
+</html>

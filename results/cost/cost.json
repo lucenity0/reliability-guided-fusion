@@ -1,0 +1,229 @@
+{
+  "device": "cuda",
+  "gpu_name": "NVIDIA L4",
+  "shapes": {
+    "P": 145,
+    "L": 77
+  },
+  "models": {
+    "concat_mlp": {
+      "method": "concat_mlp",
+      "model": "concat_mlp",
+      "dataset": "fhm",
+      "params": 393729,
+      "flops": {
+        "counted": 786944,
+        "attention": 0,
+        "total": 786944
+      },
+      "latency_ms": {
+        "1": 0.19237249944126233,
+        "64": 0.0037091406284162076
+      },
+      "peak_memory_bytes": {
+        "1": 10793472,
+        "64": 55518208
+      }
+    },
+    "dynamic": {
+      "method": "dynamic",
+      "model": "dynamic",
+      "dataset": "fhm",
+      "params": 4458758,
+      "flops": {
+        "counted": 557028352,
+        "attention": 45731840,
+        "total": 602760192
+      },
+      "latency_ms": {
+        "1": 5.06841100013844,
+        "64": 0.13688844531145605
+      },
+      "peak_memory_bytes": {
+        "1": 28701696,
+        "64": 177883648
+      }
+    },
+    "global": {
+      "method": "global",
+      "model": "dynamic",
+      "dataset": "fhm",
+      "params": 3931398,
+      "flops": {
+        "counted": 555976192,
+        "attention": 45731840,
+        "total": 601708032
+      },
+      "latency_ms": {
+        "1": 4.663696999159583,
+        "64": 0.13761044530724575
+      },
+      "peak_memory_bytes": {
+        "1": 26592256,
+        "64": 175774208
+      }
+    },
+    "linear_probe": {
+      "method": "linear_probe",
+      "model": "linear_probe",
+      "dataset": "fhm",
+      "params": 1537,
+      "flops": {
+        "counted": 3072,
+        "attention": 0,
+        "total": 3072
+      },
+      "latency_ms": {
+        "1": 0.2544625003793044,
+        "64": 0.003808312513342571
+      },
+      "peak_memory_bytes": {
+        "1": 9228800,
+        "64": 54211584
+      }
+    },
+    "pdf": {
+      "method": "pdf",
+      "model": "pdf",
+      "dataset": "fhm",
+      "params": 5515268,
+      "flops": {
+        "counted": 184553472,
+        "attention": 0,
+        "total": 184553472
+      },
+      "latency_ms": {
+        "1": 2.1351514997149934,
+        "64": 0.03313394530835012
+      },
+      "peak_memory_bytes": {
+        "1": 32789504,
+        "64": 114709504
+      }
+    },
+    "qmf": {
+      "method": "qmf",
+      "model": "qmf",
+      "dataset": "fhm",
+      "params": 3414018,
+      "flops": {
+        "counted": 180357120,
+        "attention": 0,
+        "total": 180357120
+      },
+      "latency_ms": {
+        "1": 1.6570649995628628,
+        "64": 0.027044835931633315
+      },
+      "peak_memory_bytes": {
+        "1": 23465984,
+        "64": 105385984
+      }
+    },
+    "static": {
+      "method": "static",
+      "model": "dynamic",
+      "dataset": "fhm",
+      "params": 3931395,
+      "flops": {
+        "counted": 555976192,
+        "attention": 45731840,
+        "total": 601708032
+      },
+      "latency_ms": {
+        "1": 4.656470000554691,
+        "64": 0.1360881718710516
+      },
+      "peak_memory_bytes": {
+        "1": 26591744,
+        "64": 175773696
+      }
+    },
+    "unimodal_img": {
+      "method": "unimodal_img",
+      "model": "unimodal",
+      "dataset": "fhm",
+      "params": 525825,
+      "flops": {
+        "counted": 57934336,
+        "attention": 0,
+        "total": 57934336
+      },
+      "latency_ms": {
+        "1": 0.626388999990013,
+        "64": 0.010321085937903263
+      },
+      "peak_memory_bytes": {
+        "1": 11613696,
+        "64": 74696192
+      }
+    },
+    "unimodal_txt": {
+      "method": "unimodal_txt",
+      "model": "unimodal",
+      "dataset": "fhm",
+      "params": 525825,
+      "flops": {
+        "counted": 31195648,
+        "attention": 0,
+        "total": 31195648
+      },
+      "latency_ms": {
+        "1": 0.9472249994360027,
+        "64": 0.012311476567106183
+      },
+      "peak_memory_bytes": {
+        "1": 11710464,
+        "64": 81691136
+      }
+    },
+    "v3_alpha": {
+      "method": "v3_alpha",
+      "model": "v3_alpha",
+      "dataset": "fhm",
+      "params": 2842244,
+      "flops": {
+        "counted": 5675392,
+        "attention": 0,
+        "total": 5675392
+      },
+      "latency_ms": {
+        "1": 1.4562470005330397,
+        "64": 0.023190187505406357
+      },
+      "peak_memory_bytes": {
+        "1": 20616704,
+        "64": 66857472
+      }
+    }
+  },
+  "closed_form": {
+    "dynamic": 602953734,
+    "profiled": 602760192,
+    "relative_error": 0.00032098980251111603
+  },
+  "backbone": {
+    "backbone": "openai/clip-vit-large-patch14-336",
+    "flops": {
+      "image": {
+        "counted": 349189963776,
+        "attention": 0,
+        "total": 349189963776
+      },
+      "text": {
+        "counted": 13079937024,
+        "attention": 0,
+        "total": 13079937024
+      }
+    },
+    "latency_ms": {
+      "1": 62.53157800074405,
+      "64": 57.29546332813129
+    },
+    "peak_memory_bytes": {
+      "1": 1761850880,
+      "64": 4231864832
+    },
+    "params": 427944193
+  }
+}

@@ -1,0 +1,36 @@
+# mvsa, static_mq: the D-027 mixed-quality run (#152). The frozen clean config
+# configs/mvsa/static.yaml unchanged, plus quality_corruption: drop50 (PROTOCOL
+# "Mixed-quality inputs"). No new tuning.
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: mvsa
+method: static_mq
+model: dynamic
+cache_version: v1
+num_classes: 3
+max_samples: 0
+feature_dim: 768
+hidden_dim: 256
+num_heads: 8
+n_cross_layers: 2
+cross_fusion_dim: 32
+dropout: 0.17920946741883814
+fusion_variant: P
+router_mode: static
+tau: 1.0
+lambda_aux: 0.42675430690012073
+lambda_rel: 0.1
+entropy_stop_grad: true
+lr: 0.00020076079721440432
+weight_decay: 0.0464276036303828
+warmup_frac: 0.1
+batch_size: 64
+num_epochs: 30
+patience: 5
+quality_corruption: drop50

@@ -1,0 +1,45 @@
+# FHM Hate-CLIPper, cross fusion: 1 mapping layer, 1 pre-output layer (gate #13, D-013).
+# Same published settings as hateclipper_align.yaml (paper Table 3, run.sh dropouts,
+# constant lr). About 1.08B trainable parameters (the n² = 1,048,576-d outer product
+# feeds a 1024-wide layer), so it runs on a Colab L4, not the 6 GB RTX 4050 (D-022).
+# Paths are runtime keys: set HMF_FEATURE_DIR, HMF_RESULTS_DIR and CHECKPOINT_DIR.
+
+# Shared runtime defaults (configs/default.yaml)
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14
+
+# Data: pre-projection pooler outputs at 224 px (#11 hc224 cache)
+dataset: fhm
+method: hateclipper_cross
+model: hateclipper
+cache_version: hc224
+num_classes: 2
+max_samples: 0
+
+# Model (hmf/models/hateclipper.py)
+image_dim: 1024
+text_dim: 768
+map_dim: 1024
+num_mapping_layers: 1
+fusion: cross
+num_pre_output_layers: 1
+pre_output_dim: 1024
+drop_map: 0.2
+drop_fusion: 0.4
+drop_pre_output: 0.1
+
+# Training
+lr: 1.0e-4
+weight_decay: 1.0e-4
+lr_schedule: constant
+warmup_frac: 0.0
+grad_clip: 0.1
+batch_size: 64
+num_epochs: 20
+patience: 20

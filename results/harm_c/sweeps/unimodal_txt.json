@@ -1,0 +1,2847 @@
+{
+  "dataset": "harm_c",
+  "method": "unimodal_txt",
+  "family": "unimodal",
+  "base_config": "configs/fhm/unimodal_txt.yaml",
+  "overrides": {
+    "dataset": "harm_c"
+  },
+  "selection_metric": "auroc",
+  "direction": "maximize",
+  "sampler": "TPESampler(seed=0)",
+  "seed": 0,
+  "n_trials": 20,
+  "max_trials": 50,
+  "optuna_version": "5.0.0",
+  "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+  "search_space": {
+    "lr": {
+      "type": "float",
+      "low": 1e-05,
+      "high": 0.0005,
+      "log": true
+    },
+    "dropout": {
+      "type": "float",
+      "low": 0.1,
+      "high": 0.5,
+      "log": false
+    },
+    "weight_decay": {
+      "type": "float",
+      "low": 0.01,
+      "high": 0.05,
+      "log": false
+    },
+    "hidden_dim": {
+      "type": "categorical",
+      "choices": [
+        256,
+        512
+      ]
+    },
+    "warmup_frac": {
+      "type": "categorical",
+      "choices": [
+        0.05,
+        0.1
+      ]
+    }
+  },
+  "best": {
+    "trial": 13,
+    "value": 0.7955059355568117,
+    "params": {
+      "lr": 0.00011954080314031987,
+      "dropout": 0.10273213941126298,
+      "weight_decay": 0.020148391630065016,
+      "hidden_dim": 256,
+      "warmup_frac": 0.1
+    },
+    "best_epoch": 3,
+    "config_hash": "ba56431668997dc0b179ac20bbf1e22a07bb547daf7cb8244ef1592c4978d01f",
+    "config": "configs/harm_c/unimodal_txt.yaml"
+  },
+  "trials": [
+    {
+      "number": 0,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 8.558894657793098e-05,
+        "dropout": 0.3860757465489678,
+        "weight_decay": 0.03411053504286576,
+        "hidden_dim": 256,
+        "warmup_frac": 0.05
+      },
+      "value": 0.788863764838892,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 12.45304264400147,
+      "config_hash": "f8123f570cd3507df6b2cb6b559ddece5c6279b0d7bf49a9591c0bccf914ba3e",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.4204196333885193,
+        "accuracy": 0.711864406779661,
+        "macro_f1": 0.6994306263110579,
+        "auroc": 0.788863764838892,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.13308650919230983,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 33,
+              "mean_probability": 0.03649146984698194,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 19,
+              "mean_probability": 0.09370538984474383,
+              "observed_frequency": 0.05263157894736842
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 14,
+              "mean_probability": 0.17312220909765788,
+              "observed_frequency": 0.35714285714285715
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.23084780459220594,
+              "observed_frequency": 0.46153846153846156
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 10,
+              "mean_probability": 0.30649723410606383,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 5,
+              "mean_probability": 0.3792757749557495,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 9,
+              "mean_probability": 0.4309343265162574,
+              "observed_frequency": 0.5555555555555556
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.5034238360822201,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 9,
+              "mean_probability": 0.5727835628721449,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 6,
+              "mean_probability": 0.6269738773504893,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 15,
+              "mean_probability": 0.6940193335215251,
+              "observed_frequency": 0.4666666666666667
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 11,
+              "mean_probability": 0.7596052614125338,
+              "observed_frequency": 0.5454545454545454
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 11,
+              "mean_probability": 0.8425248752940785,
+              "observed_frequency": 0.6363636363636364
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 11,
+              "mean_probability": 0.8992313146591187,
+              "observed_frequency": 0.8181818181818182
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 3,
+              "mean_probability": 0.9455623626708984,
+              "observed_frequency": 0.6666666666666666
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 1,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00032741274355183687,
+        "dropout": 0.4854651042004118,
+        "weight_decay": 0.025337660753031108,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7936687394007914,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.423684389999835,
+      "config_hash": "38d21983f3c1ad48265e1ea0c5e106f631600f49850a7294120b73d1da68b805",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.632210910320282,
+        "accuracy": 0.7457627118644068,
+        "macro_f1": 0.71967057332911,
+        "auroc": 0.7936687394007914,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.13291945870397456,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 31,
+              "mean_probability": 0.03177768364548683,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09736727134269826,
+              "observed_frequency": 0.11764705882352941
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 13,
+              "mean_probability": 0.16255237964483407,
+              "observed_frequency": 0.3076923076923077
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 6,
+              "mean_probability": 0.24181324491898218,
+              "observed_frequency": 0.16666666666666666
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 13,
+              "mean_probability": 0.2982484858769637,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 7,
+              "mean_probability": 0.3669852614402771,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 8,
+              "mean_probability": 0.4283173345029354,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.512017834931612,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 8,
+              "mean_probability": 0.5693855211138725,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 11,
+              "mean_probability": 0.6362687728621743,
+              "observed_frequency": 0.45454545454545453
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.6975867549578348,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 8,
+              "mean_probability": 0.769329346716404,
+              "observed_frequency": 0.625
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 15,
+              "mean_probability": 0.8330401380856832,
+              "observed_frequency": 0.4666666666666667
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 16,
+              "mean_probability": 0.905800886452198,
+              "observed_frequency": 0.6875
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 7,
+              "mean_probability": 0.9527801019804818,
+              "observed_frequency": 0.8571428571428571
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 2,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 1.3203471492592721e-05,
+        "dropout": 0.13485171988061628,
+        "weight_decay": 0.010808735897613029,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7866026003391746,
+      "best_epoch": 27,
+      "epochs_run": 30,
+      "train_seconds": 38.828427430999,
+      "config_hash": "7bc279d3532ab31ad734361d7d6641240352fc2c9722fa5cd05cd0e8edc041a7",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.7996192574501038,
+        "accuracy": 0.751412429378531,
+        "macro_f1": 0.7037431527693244,
+        "auroc": 0.7866026003391746,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.18198090093999597,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 29,
+              "mean_probability": 0.03736296533767519,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09985485015546575,
+              "observed_frequency": 0.058823529411764705
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 9,
+              "mean_probability": 0.15878693097167546,
+              "observed_frequency": 0.1111111111111111
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.2395648486339129,
+              "observed_frequency": 0.5384615384615384
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 8,
+              "mean_probability": 0.2917773425579071,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 8,
+              "mean_probability": 0.35701508820056915,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 7,
+              "mean_probability": 0.44202856932367596,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.4962203460080283,
+              "observed_frequency": 0.7142857142857143
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 8,
+              "mean_probability": 0.5770024955272675,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 8,
+              "mean_probability": 0.6517913639545441,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.7065574593014188,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.7773501932621002,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 17,
+              "mean_probability": 0.8256256264798781,
+              "observed_frequency": 0.6470588235294118
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 10,
+              "mean_probability": 0.9026500225067139,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 17,
+              "mean_probability": 0.9575775791617,
+              "observed_frequency": 0.8823529411764706
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 3,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00022790110416522034,
+        "dropout": 0.2845917449011728,
+        "weight_decay": 0.04122116705145822,
+        "hidden_dim": 512,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7878745053702657,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.714287956001499,
+      "config_hash": "d58e8ed04963a6f12520bc4576c29fbec6df4342a26b07d8463ba0168b1beb6f",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.667332112789154,
+        "accuracy": 0.7401129943502824,
+        "macro_f1": 0.7100427350427351,
+        "auroc": 0.7878745053702657,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.15331413167249938,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 30,
+              "mean_probability": 0.03390937893030544,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09878596269032534,
+              "observed_frequency": 0.058823529411764705
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 15,
+              "mean_probability": 0.15666050414244334,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 7,
+              "mean_probability": 0.24308096723897116,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 8,
+              "mean_probability": 0.2983233965933323,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 10,
+              "mean_probability": 0.3661712110042572,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 5,
+              "mean_probability": 0.4422289371490479,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.4926914530141013,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 10,
+              "mean_probability": 0.5605405509471894,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 9,
+              "mean_probability": 0.6399210161632962,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.7007952067587111,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.7829116642475128,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 12,
+              "mean_probability": 0.8428095330794653,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 12,
+              "mean_probability": 0.9113649626572927,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 16,
+              "mean_probability": 0.9580428265035152,
+              "observed_frequency": 0.75
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 4,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 7.702020060945178e-05,
+        "dropout": 0.26586477599620945,
+        "weight_decay": 0.020582224484185077,
+        "hidden_dim": 256,
+        "warmup_frac": 0.05
+      },
+      "value": 0.7866026003391746,
+      "best_epoch": 5,
+      "epochs_run": 10,
+      "train_seconds": 12.8335803580012,
+      "config_hash": "e8adb5fc7dd3546e076778e6989d87fe483985e9139436e51ea1f188d028b752",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6864984631538391,
+        "accuracy": 0.7344632768361582,
+        "macro_f1": 0.7093799126637554,
+        "auroc": 0.7866026003391746,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.18432831765799707,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 29,
+              "mean_probability": 0.03611687888744576,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.10272902294116862,
+              "observed_frequency": 0.058823529411764705
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 10,
+              "mean_probability": 0.16217005699872972,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 9,
+              "mean_probability": 0.2326049440436893,
+              "observed_frequency": 0.4444444444444444
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 8,
+              "mean_probability": 0.30298153311014175,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 11,
+              "mean_probability": 0.36732681501995434,
+              "observed_frequency": 0.18181818181818182
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 3,
+              "mean_probability": 0.4354262749354045,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 10,
+              "mean_probability": 0.5127093851566314,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 4,
+              "mean_probability": 0.5615414828062057,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 11,
+              "mean_probability": 0.630817321213809,
+              "observed_frequency": 0.09090909090909091
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.7096728152698941,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 11,
+              "mean_probability": 0.7747140472585504,
+              "observed_frequency": 0.45454545454545453
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 14,
+              "mean_probability": 0.8310989311763218,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 10,
+              "mean_probability": 0.8889999330043793,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 21,
+              "mean_probability": 0.9586712405795142,
+              "observed_frequency": 0.7619047619047619
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 5,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00011203254019178547,
+        "dropout": 0.3448382890889686,
+        "weight_decay": 0.03467735987499028,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.791407574901074,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.65138954699978,
+      "config_hash": "d72cfe1fcb4e80ea5e42545e1fe5a8f9843c6170f84c9e2de727e5d8665bfa93",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.35522642731666565,
+        "accuracy": 0.7062146892655368,
+        "macro_f1": 0.696917808219178,
+        "auroc": 0.791407574901074,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.13177885910190937,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 34,
+              "mean_probability": 0.0351608314222711,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 20,
+              "mean_probability": 0.09094890356063842,
+              "observed_frequency": 0.1
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 16,
+              "mean_probability": 0.16874615475535393,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.22953725319642287,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 9,
+              "mean_probability": 0.29646292328834534,
+              "observed_frequency": 0.1111111111111111
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 6,
+              "mean_probability": 0.3718980848789215,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 9,
+              "mean_probability": 0.4364856647120582,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.4965698335851942,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 10,
+              "mean_probability": 0.5604656338691711,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 12,
+              "mean_probability": 0.6395366291205088,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 8,
+              "mean_probability": 0.7009447365999222,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 9,
+              "mean_probability": 0.7570083406236436,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 12,
+              "mean_probability": 0.8364084362983704,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 10,
+              "mean_probability": 0.9012701034545898,
+              "observed_frequency": 0.8
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 2,
+              "mean_probability": 0.9492819309234619,
+              "observed_frequency": 0.5
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 6,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00015319848692144685,
+        "dropout": 0.12409018865170794,
+        "weight_decay": 0.03667066861782671,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7925381571509327,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.660998194000058,
+      "config_hash": "108ad28e26217294c4f292ec604f67153f93bf4858d11b8d7d796564c09bbaa8",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.4725731313228607,
+        "accuracy": 0.7288135593220338,
+        "macro_f1": 0.7042606516290727,
+        "auroc": 0.7925381571509327,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.11335689040153461,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 39,
+              "mean_probability": 0.031125948418122835,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09102458243860918,
+              "observed_frequency": 0.11764705882352941
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 15,
+              "mean_probability": 0.16769411861896516,
+              "observed_frequency": 0.4666666666666667
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 14,
+              "mean_probability": 0.2335666130696024,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 3,
+              "mean_probability": 0.29133346676826477,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 12,
+              "mean_probability": 0.36723104616006214,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 9,
+              "mean_probability": 0.44166235791312325,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 5,
+              "mean_probability": 0.4711619198322296,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 8,
+              "mean_probability": 0.5721975639462471,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 10,
+              "mean_probability": 0.6277453124523162,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 10,
+              "mean_probability": 0.7010956525802612,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.7691186606884003,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 9,
+              "mean_probability": 0.8475437230534024,
+              "observed_frequency": 0.4444444444444444
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 12,
+              "mean_probability": 0.9051077465216318,
+              "observed_frequency": 0.9166666666666666
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 4,
+              "mean_probability": 0.952311173081398,
+              "observed_frequency": 0.75
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 7,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 4.1489069053626195e-05,
+        "dropout": 0.3280787081671519,
+        "weight_decay": 0.027544060538492815,
+        "hidden_dim": 256,
+        "warmup_frac": 0.05
+      },
+      "value": 0.7891464104013567,
+      "best_epoch": 9,
+      "epochs_run": 14,
+      "train_seconds": 18.100715866999963,
+      "config_hash": "5ed980e18883bdf87e2cc7038c2acd6ed2eeb647669a1bb9c6d5cc699584bd90",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6742389798164368,
+        "accuracy": 0.7288135593220338,
+        "macro_f1": 0.7042606516290727,
+        "auroc": 0.7891464104013567,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.21207402503949271,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 31,
+              "mean_probability": 0.033943553154747334,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 18,
+              "mean_probability": 0.10555238359504276,
+              "observed_frequency": 0.05555555555555555
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 7,
+              "mean_probability": 0.16098615952900477,
+              "observed_frequency": 0.2857142857142857
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 11,
+              "mean_probability": 0.23551879687742752,
+              "observed_frequency": 0.6363636363636364
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 10,
+              "mean_probability": 0.2916691392660141,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 8,
+              "mean_probability": 0.3560381047427654,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 4,
+              "mean_probability": 0.4388191029429436,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.5166361544813428,
+              "observed_frequency": 0.8571428571428571
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 8,
+              "mean_probability": 0.5665366277098656,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 8,
+              "mean_probability": 0.6379883661866188,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 8,
+              "mean_probability": 0.6998064815998077,
+              "observed_frequency": 0.625
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 11,
+              "mean_probability": 0.7695856202732433,
+              "observed_frequency": 0.36363636363636365
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 14,
+              "mean_probability": 0.8302527240344456,
+              "observed_frequency": 0.5714285714285714
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 10,
+              "mean_probability": 0.89203160405159,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 22,
+              "mean_probability": 0.9615796316753734,
+              "observed_frequency": 0.7727272727272727
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 8,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00012870975230943387,
+        "dropout": 0.20131664101591284,
+        "weight_decay": 0.02865243091425225,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7942340305257207,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.681902090998847,
+      "config_hash": "12b9e70e27dba6f97ff8a9055e43514c025d9ce4b69b46eb5e3a6903749e2f4f",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.38812944293022156,
+        "accuracy": 0.711864406779661,
+        "macro_f1": 0.6979421114271374,
+        "auroc": 0.7942340305257207,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.1142024520105856,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 39,
+              "mean_probability": 0.03518172992297854,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 16,
+              "mean_probability": 0.09526175633072853,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 16,
+              "mean_probability": 0.17414129991084337,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.2299796102138666,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 4,
+              "mean_probability": 0.28786634653806686,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 13,
+              "mean_probability": 0.35975398925634533,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 6,
+              "mean_probability": 0.4284210205078125,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 9,
+              "mean_probability": 0.49061040083567303,
+              "observed_frequency": 0.5555555555555556
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 5,
+              "mean_probability": 0.5713835954666138,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 13,
+              "mean_probability": 0.6209268661645743,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 10,
+              "mean_probability": 0.7014090478420257,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.7659115552902221,
+              "observed_frequency": 0.7
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 8,
+              "mean_probability": 0.8399030044674873,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 13,
+              "mean_probability": 0.9018073586317209,
+              "observed_frequency": 0.9230769230769231
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 2,
+              "mean_probability": 0.9571663439273834,
+              "observed_frequency": 0.5
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 9,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 1.7169936517792245e-05,
+        "dropout": 0.1786329446720214,
+        "weight_decay": 0.024749006826438567,
+        "hidden_dim": 256,
+        "warmup_frac": 0.05
+      },
+      "value": 0.7868852459016393,
+      "best_epoch": 16,
+      "epochs_run": 21,
+      "train_seconds": 27.18460876000063,
+      "config_hash": "4c8995917be79b436b3e2041f73cc2753c1c650b53c9c12b65a45488060bdeb8",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.7814379334449768,
+        "accuracy": 0.7457627118644068,
+        "macro_f1": 0.6986265087593173,
+        "auroc": 0.7868852459016393,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.16638856617165573,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 30,
+              "mean_probability": 0.03476297409894566,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 18,
+              "mean_probability": 0.09799395543005732,
+              "observed_frequency": 0.05555555555555555
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 11,
+              "mean_probability": 0.16714424301277508,
+              "observed_frequency": 0.36363636363636365
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.2396254803125675,
+              "observed_frequency": 0.46153846153846156
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 7,
+              "mean_probability": 0.29874019963400705,
+              "observed_frequency": 0.14285714285714285
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 6,
+              "mean_probability": 0.35374627510706586,
+              "observed_frequency": 0.16666666666666666
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 7,
+              "mean_probability": 0.4320350246770041,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.4969061575829983,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 6,
+              "mean_probability": 0.5633069773515066,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 10,
+              "mean_probability": 0.6341078996658325,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 8,
+              "mean_probability": 0.7017287164926529,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 14,
+              "mean_probability": 0.7783784994057247,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 14,
+              "mean_probability": 0.8297717486109052,
+              "observed_frequency": 0.5714285714285714
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 8,
+              "mean_probability": 0.9057862460613251,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 17,
+              "mean_probability": 0.9552891008994159,
+              "observed_frequency": 0.8823529411764706
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 10,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 2.7271438496361644e-05,
+        "dropout": 0.22975706942210838,
+        "weight_decay": 0.03617413465705073,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7894290559638214,
+      "best_epoch": 9,
+      "epochs_run": 14,
+      "train_seconds": 18.572514856999987,
+      "config_hash": "3c4bb2af3a6e7d0abe6e5643d299f85266ccc977dd84dc798b0d905da0883a56",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.8006798028945923,
+        "accuracy": 0.7457627118644068,
+        "macro_f1": 0.6953528399311532,
+        "auroc": 0.7894290559638214,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.19121342923197537,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 26,
+              "mean_probability": 0.038367782110491626,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09632946287884432,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 10,
+              "mean_probability": 0.15465332865715026,
+              "observed_frequency": 0.1
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 12,
+              "mean_probability": 0.2388581782579422,
+              "observed_frequency": 0.5833333333333334
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 10,
+              "mean_probability": 0.2987619757652283,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 9,
+              "mean_probability": 0.36310452553961015,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 4,
+              "mean_probability": 0.4376338794827461,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 9,
+              "mean_probability": 0.4956236647235023,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 7,
+              "mean_probability": 0.5756212217467171,
+              "observed_frequency": 0.14285714285714285
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 10,
+              "mean_probability": 0.6435234844684601,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.7082812123828464,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.7788659989833832,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 17,
+              "mean_probability": 0.8290035479209003,
+              "observed_frequency": 0.6470588235294118
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 12,
+              "mean_probability": 0.9071247577667236,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 15,
+              "mean_probability": 0.9568535606066386,
+              "observed_frequency": 0.8666666666666667
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 11,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00022190392055126276,
+        "dropout": 0.3699411645454952,
+        "weight_decay": 0.02079253283259399,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7946579988694178,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.848297692000415,
+      "config_hash": "d9d4389680a6ad752b2f50bb3f9c8d10e15b12b0d027ba7417e5828630c28c04",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.5950539112091064,
+        "accuracy": 0.7344632768361582,
+        "macro_f1": 0.7025210084033613,
+        "auroc": 0.7946579988694178,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.11711644447056081,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 35,
+              "mean_probability": 0.03066847805998155,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 20,
+              "mean_probability": 0.09368644803762435,
+              "observed_frequency": 0.1
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 10,
+              "mean_probability": 0.17139876037836074,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 16,
+              "mean_probability": 0.23200753424316645,
+              "observed_frequency": 0.3125
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 8,
+              "mean_probability": 0.30617348849773407,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 5,
+              "mean_probability": 0.3672304153442383,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 10,
+              "mean_probability": 0.43050643503665925,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.4940967373549938,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 9,
+              "mean_probability": 0.5712092518806458,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 9,
+              "mean_probability": 0.635690775182512,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 8,
+              "mean_probability": 0.7056377977132797,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 12,
+              "mean_probability": 0.7683693766593933,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 9,
+              "mean_probability": 0.8436210420396593,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 15,
+              "mean_probability": 0.9035658160845439,
+              "observed_frequency": 0.8
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 3,
+              "mean_probability": 0.9600569407145182,
+              "observed_frequency": 0.6666666666666666
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 12,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00032349851704218427,
+        "dropout": 0.34831700769752016,
+        "weight_decay": 0.010582552228616359,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.791831543244771,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.636257363999903,
+      "config_hash": "06a586328ee7565c1a663f0e18933c3e9ee420f2d5624be823d59a3daf6d0e58",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6604874730110168,
+        "accuracy": 0.7627118644067796,
+        "macro_f1": 0.7352564102564103,
+        "auroc": 0.791831543244771,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.1465640515562589,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 29,
+              "mean_probability": 0.03703258087023579,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.10071973414982066,
+              "observed_frequency": 0.11764705882352941
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 15,
+              "mean_probability": 0.1720697909593582,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 5,
+              "mean_probability": 0.23803646564483644,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 12,
+              "mean_probability": 0.30901283274094266,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 9,
+              "mean_probability": 0.3735063307815128,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 8,
+              "mean_probability": 0.4312819689512253,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.5028351502759116,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 10,
+              "mean_probability": 0.5671487033367157,
+              "observed_frequency": 0.1
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 8,
+              "mean_probability": 0.643432229757309,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 10,
+              "mean_probability": 0.6986606776714325,
+              "observed_frequency": 0.8
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 8,
+              "mean_probability": 0.7678111791610718,
+              "observed_frequency": 0.625
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 13,
+              "mean_probability": 0.8346526393523583,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 18,
+              "mean_probability": 0.9027734266387092,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 8,
+              "mean_probability": 0.956577330827713,
+              "observed_frequency": 0.875
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 13,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.00011954080314031987,
+        "dropout": 0.10273213941126298,
+        "weight_decay": 0.020148391630065016,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7955059355568117,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.448946604999946,
+      "config_hash": "ba56431668997dc0b179ac20bbf1e22a07bb547daf7cb8244ef1592c4978d01f",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6054483652114868,
+        "accuracy": 0.7344632768361582,
+        "macro_f1": 0.6973258140804075,
+        "auroc": 0.7955059355568117,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.10789575367787127,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 39,
+              "mean_probability": 0.03472559531338704,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 16,
+              "mean_probability": 0.09364816779270768,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 16,
+              "mean_probability": 0.1695644734427333,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 13,
+              "mean_probability": 0.22917843208863184,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 4,
+              "mean_probability": 0.2902885526418686,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 13,
+              "mean_probability": 0.36078956952461827,
+              "observed_frequency": 0.38461538461538464
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 7,
+              "mean_probability": 0.4352408860410963,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.49331141635775566,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 5,
+              "mean_probability": 0.5748305201530457,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 12,
+              "mean_probability": 0.6192510525385538,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 11,
+              "mean_probability": 0.7026451555165377,
+              "observed_frequency": 0.45454545454545453
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 8,
+              "mean_probability": 0.7609531134366989,
+              "observed_frequency": 0.75
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 10,
+              "mean_probability": 0.8359456241130829,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 11,
+              "mean_probability": 0.9008685187859968,
+              "observed_frequency": 0.9090909090909091
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 4,
+              "mean_probability": 0.9477744996547699,
+              "observed_frequency": 0.75
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 14,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.0001416912770197504,
+        "dropout": 0.1326406668790278,
+        "weight_decay": 0.012846962348037175,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7943753533069531,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 11.031093463001525,
+      "config_hash": "2a9713d2647143798c9dc3d7d6d8c7c831d8ae501fd2135f38b4080db7aa1e35",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6398348212242126,
+        "accuracy": 0.7401129943502824,
+        "macro_f1": 0.6935411020776874,
+        "auroc": 0.7943753533069531,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.11262043401609453,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 39,
+              "mean_probability": 0.0322953120757563,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 17,
+              "mean_probability": 0.09335150744985132,
+              "observed_frequency": 0.11764705882352941
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 14,
+              "mean_probability": 0.16943396202155522,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 15,
+              "mean_probability": 0.23081020812193553,
+              "observed_frequency": 0.26666666666666666
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 3,
+              "mean_probability": 0.29252628485361737,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 12,
+              "mean_probability": 0.3633728598554929,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 8,
+              "mean_probability": 0.434506319463253,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 7,
+              "mean_probability": 0.4839944456304823,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 6,
+              "mean_probability": 0.5733193457126617,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 12,
+              "mean_probability": 0.6258736848831177,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.7019395298428006,
+              "observed_frequency": 0.5555555555555556
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 10,
+              "mean_probability": 0.765510493516922,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 9,
+              "mean_probability": 0.8418823414378696,
+              "observed_frequency": 0.4444444444444444
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 12,
+              "mean_probability": 0.9028009176254272,
+              "observed_frequency": 0.9166666666666666
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 4,
+              "mean_probability": 0.9508135765790939,
+              "observed_frequency": 0.75
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 15,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 4.910377899906831e-05,
+        "dropout": 0.14968886901566722,
+        "weight_decay": 0.017229625491929933,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.78631995477671,
+      "best_epoch": 7,
+      "epochs_run": 12,
+      "train_seconds": 17.187162824000552,
+      "config_hash": "56a83b097ad2a4924c5030ed442a94377cf88ff3bd9fd748799b49ebf6d8713a",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6539081335067749,
+        "accuracy": 0.7344632768361582,
+        "macro_f1": 0.7093799126637554,
+        "auroc": 0.78631995477671,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.1795515133446809,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 33,
+              "mean_probability": 0.030418163645222332,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 18,
+              "mean_probability": 0.09231371225582229,
+              "observed_frequency": 0.05555555555555555
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 12,
+              "mean_probability": 0.160735002408425,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 10,
+              "mean_probability": 0.2378525510430336,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 10,
+              "mean_probability": 0.29265132248401643,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 4,
+              "mean_probability": 0.3668067008256912,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 5,
+              "mean_probability": 0.4404804229736328,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 10,
+              "mean_probability": 0.5029778808355332,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 8,
+              "mean_probability": 0.5724102631211281,
+              "observed_frequency": 0.125
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 5,
+              "mean_probability": 0.6410719990730286,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 7,
+              "mean_probability": 0.7003034353256226,
+              "observed_frequency": 0.8571428571428571
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 12,
+              "mean_probability": 0.7579458554585775,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 16,
+              "mean_probability": 0.8305670469999313,
+              "observed_frequency": 0.5625
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 7,
+              "mean_probability": 0.9016688466072083,
+              "observed_frequency": 0.5714285714285714
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 20,
+              "mean_probability": 0.9608986616134644,
+              "observed_frequency": 0.75
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 16,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.0004995929442226433,
+        "dropout": 0.19023733962131487,
+        "weight_decay": 0.019460974722170777,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7916902204635388,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.419417662998967,
+      "config_hash": "a6a6dcba71ac8a272965f92e66c09aa8d30cd099b3fe21677f221130a979b359",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6851532459259033,
+        "accuracy": 0.768361581920904,
+        "macro_f1": 0.7404970498837833,
+        "auroc": 0.7916902204635388,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.14837809716282926,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 23,
+              "mean_probability": 0.05074997092394725,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 21,
+              "mean_probability": 0.09727229852051962,
+              "observed_frequency": 0.09523809523809523
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 16,
+              "mean_probability": 0.16731067188084126,
+              "observed_frequency": 0.25
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 9,
+              "mean_probability": 0.2392426828543345,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 7,
+              "mean_probability": 0.30172456588063923,
+              "observed_frequency": 0.42857142857142855
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 14,
+              "mean_probability": 0.3636160365172795,
+              "observed_frequency": 0.21428571428571427
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 6,
+              "mean_probability": 0.43921011686325073,
+              "observed_frequency": 0.16666666666666666
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 12,
+              "mean_probability": 0.500598614414533,
+              "observed_frequency": 0.4166666666666667
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 6,
+              "mean_probability": 0.5710442066192627,
+              "observed_frequency": 0.16666666666666666
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 5,
+              "mean_probability": 0.630390739440918,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 8,
+              "mean_probability": 0.7103241235017776,
+              "observed_frequency": 0.875
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 9,
+              "mean_probability": 0.7627909713321261,
+              "observed_frequency": 0.7777777777777778
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 13,
+              "mean_probability": 0.8342038668118991,
+              "observed_frequency": 0.46153846153846156
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 15,
+              "mean_probability": 0.9073247631390889,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 13,
+              "mean_probability": 0.959285896558028,
+              "observed_frequency": 0.7692307692307693
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 17,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 4.581851308300372e-05,
+        "dropout": 0.4870808958902343,
+        "weight_decay": 0.015859712094519196,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7928208027133974,
+      "best_epoch": 9,
+      "epochs_run": 14,
+      "train_seconds": 18.285563825998906,
+      "config_hash": "ad5f4c9b070ab112e64e57215e1ad3ee254d4246df72b07e9a522919ba71bda1",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.7866017818450928,
+        "accuracy": 0.7570621468926554,
+        "macro_f1": 0.7120208861477921,
+        "auroc": 0.7928208027133974,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.17853771987776298,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 29,
+              "mean_probability": 0.035406751365497195,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 18,
+              "mean_probability": 0.10059984649221103,
+              "observed_frequency": 0.05555555555555555
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 9,
+              "mean_probability": 0.16155852708551618,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 11,
+              "mean_probability": 0.23902482200752606,
+              "observed_frequency": 0.5454545454545454
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 10,
+              "mean_probability": 0.29810111224651337,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 9,
+              "mean_probability": 0.36616671747631496,
+              "observed_frequency": 0.1111111111111111
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 3,
+              "mean_probability": 0.44543615976969403,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 6,
+              "mean_probability": 0.5040097286303838,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 9,
+              "mean_probability": 0.5685238573286269,
+              "observed_frequency": 0.4444444444444444
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 10,
+              "mean_probability": 0.6431563019752502,
+              "observed_frequency": 0.3
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 6,
+              "mean_probability": 0.692932148774465,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 15,
+              "mean_probability": 0.7676290154457093,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 12,
+              "mean_probability": 0.8304411123196284,
+              "observed_frequency": 0.6666666666666666
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 14,
+              "mean_probability": 0.9055625711168561,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 16,
+              "mean_probability": 0.9597917832434177,
+              "observed_frequency": 0.875
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 18,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 5.435515237018705e-05,
+        "dropout": 0.3266216724122957,
+        "weight_decay": 0.011070539822838496,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.788439796495195,
+      "best_epoch": 7,
+      "epochs_run": 12,
+      "train_seconds": 15.549764794001021,
+      "config_hash": "999c43f0268bf2fb43e3496c46cef1ed50706b09d6a5bddb5c6907e76862061d",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.6745234131813049,
+        "accuracy": 0.7344632768361582,
+        "macro_f1": 0.7072114876992925,
+        "auroc": 0.788439796495195,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.17815017156660723,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 33,
+              "mean_probability": 0.03279817372447613,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 18,
+              "mean_probability": 0.09892292444904645,
+              "observed_frequency": 0.05555555555555555
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 8,
+              "mean_probability": 0.1617575492709875,
+              "observed_frequency": 0.5
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 15,
+              "mean_probability": 0.23352612555027008,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 9,
+              "mean_probability": 0.30790436267852783,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 2,
+              "mean_probability": 0.36371397972106934,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 5,
+              "mean_probability": 0.4221852898597717,
+              "observed_frequency": 0.2
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 12,
+              "mean_probability": 0.4995842029651006,
+              "observed_frequency": 0.5833333333333334
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 4,
+              "mean_probability": 0.5779302418231964,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 9,
+              "mean_probability": 0.6321276492542691,
+              "observed_frequency": 0.2222222222222222
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 7,
+              "mean_probability": 0.6928052476474217,
+              "observed_frequency": 0.7142857142857143
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 15,
+              "mean_probability": 0.7676741162935893,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 14,
+              "mean_probability": 0.8333968690463475,
+              "observed_frequency": 0.5714285714285714
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 9,
+              "mean_probability": 0.91317837105857,
+              "observed_frequency": 0.5555555555555556
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 17,
+              "mean_probability": 0.9587994533426621,
+              "observed_frequency": 0.8235294117647058
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    },
+    {
+      "number": 19,
+      "state": "COMPLETE",
+      "params": {
+        "lr": 0.0001860169276479634,
+        "dropout": 0.33145162015706997,
+        "weight_decay": 0.018111761312962067,
+        "hidden_dim": 256,
+        "warmup_frac": 0.1
+      },
+      "value": 0.7929621254946297,
+      "best_epoch": 3,
+      "epochs_run": 8,
+      "train_seconds": 10.348152758000651,
+      "config_hash": "dd3b84fda8e8729f3969d4bb5838a584986e19f0430db568386752320a2f2348",
+      "git_sha": "1770120094987ccbc7cb272c2b620dfa802d1998",
+      "val": {
+        "threshold": 0.395846426486969,
+        "accuracy": 0.7062146892655368,
+        "macro_f1": 0.694259899016742,
+        "auroc": 0.7929621254946297,
+        "threshold_metric": "macro_f1",
+        "calibration": {
+          "ece": 0.10823222486786332,
+          "n_bins": 15,
+          "kind": "binary_positive",
+          "bins": [
+            {
+              "lower": 0.0,
+              "upper": 0.06666666666666667,
+              "count": 37,
+              "mean_probability": 0.03153176652267575,
+              "observed_frequency": 0.0
+            },
+            {
+              "lower": 0.06666666666666667,
+              "upper": 0.13333333333333333,
+              "count": 19,
+              "mean_probability": 0.09541884260742288,
+              "observed_frequency": 0.10526315789473684
+            },
+            {
+              "lower": 0.13333333333333333,
+              "upper": 0.2,
+              "count": 11,
+              "mean_probability": 0.1718249429355968,
+              "observed_frequency": 0.5454545454545454
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.26666666666666666,
+              "count": 15,
+              "mean_probability": 0.22883957425753276,
+              "observed_frequency": 0.26666666666666666
+            },
+            {
+              "lower": 0.26666666666666666,
+              "upper": 0.3333333333333333,
+              "count": 6,
+              "mean_probability": 0.29758188625176746,
+              "observed_frequency": 0.3333333333333333
+            },
+            {
+              "lower": 0.3333333333333333,
+              "upper": 0.4,
+              "count": 10,
+              "mean_probability": 0.3750470280647278,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.4666666666666667,
+              "count": 8,
+              "mean_probability": 0.4404131844639778,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.4666666666666667,
+              "upper": 0.5333333333333333,
+              "count": 8,
+              "mean_probability": 0.49382349848747253,
+              "observed_frequency": 0.375
+            },
+            {
+              "lower": 0.5333333333333333,
+              "upper": 0.6,
+              "count": 7,
+              "mean_probability": 0.5815407037734985,
+              "observed_frequency": 0.5714285714285714
+            },
+            {
+              "lower": 0.6,
+              "upper": 0.6666666666666666,
+              "count": 10,
+              "mean_probability": 0.6308007061481475,
+              "observed_frequency": 0.4
+            },
+            {
+              "lower": 0.6666666666666666,
+              "upper": 0.7333333333333333,
+              "count": 9,
+              "mean_probability": 0.6988618903689914,
+              "observed_frequency": 0.5555555555555556
+            },
+            {
+              "lower": 0.7333333333333333,
+              "upper": 0.8,
+              "count": 11,
+              "mean_probability": 0.7684890573674982,
+              "observed_frequency": 0.45454545454545453
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.8666666666666667,
+              "count": 10,
+              "mean_probability": 0.8436654806137085,
+              "observed_frequency": 0.6
+            },
+            {
+              "lower": 0.8666666666666667,
+              "upper": 0.9333333333333333,
+              "count": 13,
+              "mean_probability": 0.9046124036495502,
+              "observed_frequency": 0.8461538461538461
+            },
+            {
+              "lower": 0.9333333333333333,
+              "upper": 1.0,
+              "count": 3,
+              "mean_probability": 0.956525961558024,
+              "observed_frequency": 0.6666666666666666
+            }
+          ]
+        }
+      },
+      "retry_of": null,
+      "interrupted": null,
+      "error": null
+    }
+  ]
+}

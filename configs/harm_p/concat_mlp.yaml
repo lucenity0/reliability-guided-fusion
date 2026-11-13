@@ -1,0 +1,27 @@
+# harm_p, concat_mlp: frozen by hmf.sweep (#20). Best of 20 trials on val auroc, seed 0.
+# Base config: configs/fhm/concat_mlp.yaml. Swept: lr, dropout, weight_decay, mlp_hidden, warmup_frac.
+# Sweep record: results/harm_p/sweeps/concat_mlp.json
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: harm_p
+method: concat_mlp
+model: concat_mlp
+cache_version: v1
+num_classes: 2
+max_samples: 0
+image_dim: 768
+text_dim: 768
+mlp_hidden: 256
+dropout: 0.4854651042004118
+lr: 0.00032741274355183687
+weight_decay: 0.025337660753031108
+warmup_frac: 0.1
+batch_size: 64
+num_epochs: 30
+patience: 5

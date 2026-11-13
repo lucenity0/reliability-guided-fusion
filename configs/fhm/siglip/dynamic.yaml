@@ -1,0 +1,36 @@
+# fhm, #30 paid ablation (siglip): the frozen configs/fhm/dynamic.yaml, untuned, with
+# only the method name and these keys changed: cache_version=siglip, feature_dim=1152.
+# The siglip cache (google/siglip-so400m-patch14-384, width 1152).
+# Dropped from the paper (D-029); kept ready. Not in FINAL_CONFIGS.
+seed: 0
+deterministic: true
+data_dir: data
+feature_dir: features
+results_dir: results
+checkpoint_dir: checkpoints
+num_workers: 0
+clip_model: openai/clip-vit-large-patch14-336
+dataset: fhm
+method: siglip_dynamic
+model: dynamic
+cache_version: siglip
+num_classes: 2
+max_samples: 0
+feature_dim: 1152
+hidden_dim: 256
+num_heads: 8
+n_cross_layers: 2
+cross_fusion_dim: 32
+dropout: 0.31060737142221756
+fusion_variant: P
+router_mode: dynamic
+tau: 4.0
+lambda_aux: 0.8375553856399467
+lambda_rel: 0.10543277350625992
+entropy_stop_grad: true
+lr: 0.00040885600050085704
+weight_decay: 0.022036210458835123
+warmup_frac: 0.1
+batch_size: 64
+num_epochs: 30
+patience: 5
