@@ -1,8 +1,5 @@
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg">
-    <img src="assets/hero-light.svg" alt="When should a model trust the image, the text, or both? Router weights move away from a missing input." width="100%">
-  </picture>
+  <img src="assets/hero-light.svg" alt="When should a model trust the image, the text, or both? Router weights move away from a missing input." width="100%">
 </p>
 
 A multimodal classifier reads an image together with the text that comes with it. **Which of the two deserves trust changes from one input to the next**: sometimes the picture carries the meaning, sometimes the words do, sometimes only the two together, and sometimes one of them is missing or points the wrong way.
@@ -18,10 +15,7 @@ We route every input over three experts (image, text and their interaction) with
 ### §1 · The idea
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/pipeline-dark.svg">
-    <img src="assets/pipeline-light.svg" alt="Architecture: image and text go through frozen CLIP into three experts; a router weights them and the mixture predicts." width="100%">
-  </picture>
+  <img src="assets/pipeline-light.svg" alt="Architecture: image and text go through frozen CLIP into three experts; a router weights them and the mixture predicts." width="100%">
 </p>
 
 - **Frozen features.** CLIP ViT-L/14@336 turns the image into 144 pooled patch tokens plus a summary token, and the text into up to 77 word tokens. CLIP stays frozen and the features are cached once, so a training run takes about five minutes. Only the fusion head (4.5 M parameters) is trained.
@@ -30,10 +24,7 @@ We route every input over three experts (image, text and their interaction) with
 - **A reliability target.** Each expert's loss ℓ<sub>k</sub> on the true label says how reliable it was on that sample. A softmax at temperature τ turns the losses into a target, and a KL term pulls the router toward it.
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/temperature-dark.svg">
-    <img src="assets/temperature-light.svg" alt="One temperature moves the target from static fusion to a soft mixture to hard expert selection." width="100%">
-  </picture>
+  <img src="assets/temperature-light.svg" alt="One temperature moves the target from static fusion to a soft mixture to hard expert selection." width="100%">
 </p>
 
 As τ → ∞ the target is uniform (static fusion). At τ = 1 it equals the E-step responsibility of a classical mixture of experts. As τ → 0 it picks the single best expert. One parameter spans all three, which is the sense in which the framework is *unified*. The equations are in [`docs/MATH_SPEC.md`](docs/MATH_SPEC.md).
@@ -154,4 +145,8 @@ This project rebuilds and extends our earlier paper, *A Unified Adaptive Framewo
 
 **Cite as:** S. Nafees, S. Gaja Lakshmi, Saanvi S, S. P. Naidu and R. G. S. *A unified adaptive framework for multimodal data fusion with reliability-guided dynamic expert fusion.* B.M.S. College of Engineering, 2026.
 
-**License:** none has been chosen yet; until one is added, all rights are reserved.
+**License:** [MIT](LICENSE) for the code. The datasets, the CLIP weights and the display typeface used on the website keep their own licences and are not part of this repository.
+
+---
+
+<sub>**P.S.** This is a public-only copy of the project, not the original working repository. The original also holds internal planning notes, review correspondence, compute logs, exploratory follow-up experiments and the per-sample prediction files (about 350 MB of IDs and scores). They are left out here because of data licences, size and work still in progress; the numbers in this README come from the results committed in the original.</sub>
