@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Generate seamless paper-texture tiles for the showcase page.
 
 Neutral by construction: every pixel is pure black or pure white at a small alpha,

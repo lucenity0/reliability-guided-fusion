@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Export committed results into one JSON file for the research explorer.
 
 Reads only results/<dataset>/<method>/seed0/preds_test.csv, metrics.json and

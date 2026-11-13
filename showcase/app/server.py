@@ -1,3 +1,4 @@
+# ruff: noqa: E501
 """Local demo server: live Food-101 predictions plus the research explorer.
 
     python -m showcase.app            # http://127.0.0.1:8765
@@ -19,7 +20,6 @@ import threading
 import time
 import traceback
 import webbrowser
-from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
